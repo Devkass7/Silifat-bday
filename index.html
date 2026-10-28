@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Joyeux anniversaire, Stylish Silifat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF8F1;--surface:#FFFFFF;--ink:#1B2036;--muted:#5A5F73;--gold:#A67C2E;--navy:#1B2540;--rose:#F2C9D3;--line:#E4DCC9;
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12172A;--surface:#1B2240;--ink:#F3EEE2;--muted:#B5B9C9;--gold:#D9B36A;--navy:#0C1020;--rose:#E9B4C1;--line:#2D3556}}
+:root[data-theme="dark"]{--bg:#12172A;--surface:#1B2240;--ink:#F3EEE2;--muted:#B5B9C9;--gold:#D9B36A;--navy:#0C1020;--rose:#E9B4C1;--line:#2D3556}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;font-size:17px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.1;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding:64px 0 72px}
+.hero h1{font-size:clamp(46px,8vw,92px);letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--gold);font-weight:500}
+.hero p.lead{font-size:19px;color:var(--muted);max-width:46ch;margin:24px 0 32px}
+.btn{font:600 16px var(--sans);background:var(--navy);color:#fff;border:0;border-radius:999px;padding:14px 28px;cursor:pointer;min-height:48px}
+.btn:hover{background:var(--gold)}
+.btn:focus-visible,.thumb:focus-visible,.close:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.arch{border-radius:999px 999px 18px 18px;overflow:hidden;border:6px solid var(--surface);box-shadow:0 0 0 1px var(--line);aspect-ratio:3/4}
+.arch img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(34px,5vw,52px);margin-bottom:12px}
+section .sub{color:var(--muted);max-width:58ch;margin:0 0 36px}
+.wishes{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.wish{background:var(--surface);border-left:4px solid var(--gold);padding:22px 24px;border-radius:4px 14px 14px 4px}
+.wish h3{font-size:28px;margin-bottom:6px}
+.wish p{margin:0;color:var(--muted)}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.thumb{padding:0;border:0;background:none;cursor:zoom-in;border-radius:12px;overflow:hidden;aspect-ratio:3/4}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.thumb:hover img{transform:scale(1.04)}
+.closing{text-align:center}
+.closing blockquote{font-family:var(--serif);font-size:clamp(26px,4vw,38px);line-height:1.3;max-width:26em;margin:0 auto 20px;font-weight:500}
+.sign{color:var(--muted)}
+footer{padding:28px 0 40px;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+.lb{position:fixed;inset:0;background:rgba(10,13,26,.92);display:flex;align-items:center;justify-content:center;z-index:50;padding:24px}
+.lb img{max-width:100%;max-height:100%;border-radius:10px}
+.close{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:16px;background:#fff;border:0;border-radius:50%;width:44px;height:44px;font-size:22px;cursor:pointer}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:40}
+@media (max-width:760px){.hero{grid-template-columns:1fr;gap:32px;padding:36px 0 48px}.arch{max-width:340px;margin:0 auto;width:100%}.wishes{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}}
+@media (prefers-reduced-motion:reduce){.thumb img{transition:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script>
+(function(){
+var h=React.createElement,useState=React.useState,useRef=React.useRef,useEffect=React.useEffect;
+var PRENOM="Stylish Silifat";
+var IMG=["images/photo1.jpg","images/photo2.jpg","images/photo3.jpg","images/photo4.jpg"];
+var GALERIE=[
+ {src:IMG[2],alt:"Portrait souriant, robe beige"},
+ {src:IMG[1],alt:"Portrait en tenue de fête, motifs noir et blanc"},
+ {src:IMG[3],alt:"Portrait en robe rose à volants"},
+ {src:IMG[0],alt:"Portrait en pied, tenue à franges"}
+];
+var VOEUX=[
+ ["Santé","Une bonne santé et une énergie constante pour mener à bien tous vos projets."],
+ ["Réussite","Que cette nouvelle année vous apporte des réussites à la hauteur de vos efforts."],
+ ["Sérénité","Du calme, de l’équilibre et du temps pour ce qui compte vraiment."],
+ ["Joie","De beaux moments partagés avec vos proches et des sourires à chaque étape."]
+];
+function Confetti(props){
+ var ref=useRef(null);
+ useEffect(function(){
+  var c=ref.current,x=c.getContext("2d"),w=c.width=innerWidth,H=c.height=innerHeight;
+  var cols=["#A67C2E","#D9B36A","#F2C9D3","#1B2540","#FFFFFF"];
+  var p=[];for(var i=0;i<140;i++)p.push({x:Math.random()*w,y:-Math.random()*H*.6,r:3+Math.random()*5,vy:2+Math.random()*3,vx:-1+Math.random()*2,c:cols[i%5],a:Math.random()*6});
+  var id,t=0;
+  function f(){t++;x.clearRect(0,0,w,H);p.forEach(function(q){q.y+=q.vy;q.x+=q.vx+Math.sin(q.a+t/20);x.fillStyle=q.c;x.fillRect(q.x,q.y,q.r,q.r*1.6)});
+   if(t<260)id=requestAnimationFrame(f);else props.done()}
+  f();return function(){cancelAnimationFrame(id)};
+ },[]);
+ return h("canvas",{ref:ref,"aria-hidden":"true"});
+}
+function App(){
+ var s1=useState(false),conf=s1[0],setConf=s1[1];
+ var s2=useState(null),open=s2[0],setOpen=s2[1];
+ var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+ useEffect(function(){
+  if(open===null)return;
+  function k(e){if(e.key==="Escape")setOpen(null)}
+  addEventListener("keydown",k);return function(){removeEventListener("keydown",k)};
+ },[open]);
+ var nom=PRENOM||"amie";
+ return h("div",null,
+  conf&&!reduce&&h(Confetti,{done:function(){setConf(false)}}),
+  h("main",{className:"wrap"},
+   h("header",{className:"hero"},
+    h("div",null,
+     h("h1",null,"Joyeux ",h("em",null,"anniversaire")),
+     h("p",{className:"lead"},"Chère "+nom+", en ce jour particulier, nous vous adressons nos vœux les plus sincères de bonheur, de santé et de réussite."),
+     h("button",{className:"btn",onClick:function(){setConf(true)}},"Faire un vœu")),
+    h("div",{className:"arch"},h("img",{src:IMG[0],alt:"Portrait en tenue de fête"}))),
+   h("section",null,
+    h("h2",null,"Nos meilleurs vœux"),
+    h("p",{className:"sub"},"Que cette nouvelle année de vie soit riche en belles opportunités et en moments heureux."),
+    h("div",{className:"wishes"},VOEUX.map(function(v){return h("div",{className:"wish",key:v[0]},h("h3",null,v[0]),h("p",null,v[1]))}))),
+   h("section",null,
+    h("h2",null,"En images"),
+    h("p",{className:"sub"},"Quelques portraits pour marquer cette journée. Touchez une photo pour l’agrandir."),
+    h("div",{className:"gallery"},GALERIE.map(function(g,i){return h("button",{className:"thumb",key:i,onClick:function(){setOpen(i)},"aria-label":"Agrandir : "+g.alt},h("img",{src:g.src,alt:g.alt}))}))),
+   h("section",{className:"closing"},
+    h("blockquote",null,"Que chaque jour de cette nouvelle année vous apporte satisfaction et accomplissement."),
+    h("p",{className:"sign"},"Avec nos sincères félicitations et tous nos vœux de réussite."))),
+  h("footer",null,"Joyeux anniversaire !"),
+  open!==null&&h("div",{className:"lb",role:"dialog","aria-modal":"true",onClick:function(){setOpen(null)}},
+   h("button",{className:"close","aria-label":"Fermer",onClick:function(){setOpen(null)}},"×"),
+   h("img",{src:GALERIE[open].src,alt:GALERIE[open].alt,onClick:function(e){e.stopPropagation()}})));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+})();
+</script>
+</body>
+</html>
